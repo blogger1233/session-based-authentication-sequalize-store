@@ -1,87 +1,104 @@
 @import url('fonts.css');
-
 *{
     margin: 0;
-}
-body{
-    background-color: #677EDE;
-}
-.login-form{
-    border-radius: 5px;
-    background-color: #1a202ae7;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-   
-    
-}
-h2{
-    font-family: robotobold;
-    color: white;
-    margin-bottom: 10px;
-}
-input[type="text"]{
-    width: 100%;
     box-sizing: border-box;
-    padding: 7px 5px 7px 5px;
-    margin-bottom: 10px;
-    border-radius: 3px;
-    color: white;
-    background: none;
-    border: 0.1px solid rgba(255, 255, 255, 0.623);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-    font-size: 16px;
-    font-family: robotomedium;
 }
-p{
-    color: white;
-    font-size: 16px;
-    padding: 5px 0px 0px 0px;
-    font-family: robotomedium;
-    
+.signup{
+    background-color: #F9F9FA;
+    min-height: 100vh;
+    font-family: "IBMPlexSans";
 }
-input[type="date"], input[type="password"]{
-    background: none;
-    font-family: robotomedium;
-    font-size: 16px;
-    color: rgb(255, 255, 255);
-    border-radius: 3px;
-    padding: 7px 5px 7px 5px;
-    border: 0.1px solid rgba(255, 255, 255, 0.623);
-   
-}
-button{
-    font-size: 16px;
+.signup .signup-form{
+    box-sizing: border-box;
+    background-color: white;
     padding: 10px;
-    width: 50%;
-    align-self: center;
-    font-family: robotomedium;
+   
     border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    margin: auto;
+    margin-top: 100px;
+}
+.signup .signup-form .form-heading{
+    
+    font-weight: 600;
+    color: rgb(32, 32, 32);
+    font-size: 25px;
+}
+.signup .signup-form .label-p{
+    font-size: 16px;
+    font-weight: normal;
+    color: rgb(71, 71, 71);
+    font-style: normal;
+}
+.signup .signup-form input[type="text"], .signup .signup-form input[type="password"], .signup .signup-form input[type="date"]{
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border: 0.1px solid grey;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    outline: none;
+    font-family: 'IBMPlexSans';
+    font-style: normal;
+    font-weight: normal;
+}
+.signup .signup-form .label{
+   display: block;
+  margin-top: 20px;
+}
+.signup .signup-form button{
+    width: 100%;
+    margin-top: 20px;
     border: none;
     background: none;
-    color: rgb(255, 255, 255);
-    background-color: blueviolet;
+    font-weight: bold;
+    font-style: normal;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: rgb(19,11,149);
+    background: linear-gradient(90deg, rgba(19,11,149,1) 0%, rgba(5,5,186,1) 47%, rgba(0,66,255,1) 100%);
 }
-@media (min-width: 992px) {
- 
+
+
+@media only screen and (min-width: 1667px) {
+  .signup-form{
+    width: 25%;
+  }
 }
-@media (min-width: 768px) and (max-width: 991px) {
-    
-}
-@media (max-width: 767px) {
-    input{
-        font-size: 14px;
+@media only screen and (max-width: 1666px) and (min-width:1087px) {
+    .signup-form{
+      width: 30%;
     }
-    .login-form{
-        font-size: 14px;
-        width: 85%;
+  }
+  
+  @media only screen and (max-width: 1086px) and (min-width:601px) {
+    .signup-form{
+      width: 50%;
     }
-    p{
-        font-size: 14px;
+  }
+  @media only screen and (max-width: 600px) and (min-width:400px) {
+    .signup-form{
+      width: 70%;
     }
-    button{
-        font-size: 14px;
+  }
+  @media only screen and (max-width: 400px) and (min-width:100px) {
+    .signup-form{
+      width: 95%;
     }
-}
+    .signup .signup-form .label{
+        display: block;
+       margin-top: 10px;
+     }
+     .signup .signup-form .label-p{
+        font-size: 14px;
+     }
+     .signup .signup-form .form-heading{
+        font-size: 16px;
+     }
+     .signup .signup-form input[type="text"], .signup .signup-form input[type="password"], .signup .signup-form input[type="date"]{
+        font-size: 14px;
+     }
+  }
+  
