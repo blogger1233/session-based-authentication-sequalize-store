@@ -2,7 +2,9 @@ import { useEffect, useReducer, useState } from "react"
 import "../styles/signup.css"
 import Navbar from "../components/Navbar"
 import validate from "../modules/validatesignup"
+import { useNavigate } from "react-router-dom"
 export default function Signup() {
+    const navigate = useNavigate();
     const [message]=useState([
         "Username should only contain alphanumeric characters (a-z, 0-9).",
         "Email should be a valid format.",
@@ -10,13 +12,18 @@ export default function Signup() {
         "Passwords do not match.",
         "Date should be in YYYY-MM-DD format."
     ])
+    const [loading,setLoading]=useState(false)
     const [notvalid,setNotValid]=useState([])
+    const [status,setStatus]=useState()
+    const [data,setData]=useState()
     const initalState={
         "name":"",
-        "email":"",
         "password":"",
         "confirm_password":"",
+        "email":"",
         "age":""
+
+        
     }
     const reducer = (state,action)=>{
         console.log(state)
@@ -24,18 +31,49 @@ export default function Signup() {
             ...state,[action.name]:action.value
         })
     }
+    const [state,dispatch]=useReducer(reducer, initalState)
+    
     const handleChange = (e)=>{
         const {name,value}= e.target;
         dispatch({name:name,value:value})
-        setNotValid(validate(state))
+        const newState = { ...state, [name]: value };
+        setNotValid(validate(newState));
+     
     }
-    const [state,dispatch]=useReducer(reducer, initalState)
-    const handleSubmit = async function(){
-        setNotValid(validate(state))
-        console.log(validate(state))
-    }
+    const handleSubmit = function () {
+        // Validate the current state
+        const validationErrors = validate(state);
+      
+        // Update the notvalid state with validation errors
+        setNotValid(validationErrors);
+      
+        // Check if there are any validation errors
+        if (validationErrors.length === 0) {
+          setLoading(true);
+          fetch("http://192.168.1.8:8000/registration", {
+            method: 'POST',
+            headers: {
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify(state)
+          })
+          .then((response) => {
+            setStatus(response.status);
+            return response.json();
+          })
+          .then((data) => {
+            setData(data);
+            navigate("/email",{state:{email:state.email}})
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+        }
+      };
+      
     useEffect(() => {
         document.title = "Signup"
+        
 
     },[])
     return (<div className="signup">
@@ -99,7 +137,7 @@ export default function Signup() {
                 />
             </label>
             <button onClick={handleSubmit}>
-                Submit
+                {loading?"loading...":"submit"}
             </button>
             <ul className="message">
           {notvalid.length > 0 &&
@@ -124,6 +162,12 @@ export default function Signup() {
               </li>
             ))}
         </ul>
+        <p className="response">
+                
+                {
+                    status!=200&&data?<span style={{color:"red"}}>{data.error}</span>:""
+                }
+        </p>
         </div>
     </div>)
 }

@@ -1,4 +1,4 @@
-export default function validate(state) {
+export default  function validate(state) {
     const { email, confirm_password, password, age, name } = state;
     const inputs_notvalid = [];
 
@@ -18,8 +18,8 @@ export default function validate(state) {
         inputs_notvalid.push("password");
     }
 
-    // Validate age (example: must be a number and over 18)
-    if (isNaN(age) || age <= 18) {
+    const datePattern= /^\d{4}-\d{2}-\d{2}$/;
+    if (!datePattern.test(age)) {
         inputs_notvalid.push("age");
     }
 

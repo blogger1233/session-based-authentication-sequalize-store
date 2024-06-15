@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+.email{
+    min-height: 100vh;
+    background-color: #F9F9FA;
+
+}
+.email .logo{
+   
+    padding: 10px;
+}
+.email .logo img{
+    height: 60px;
+}
+.email .block{
+    display: flex;
+    justify-content: center;
+}
+.email .block .form{
+    box-sizing: border-box;
+    width: 30%;
+    background-color: white;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.email .block .form .heading{
+    font-family: 'IBMPlexSans';
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    font-size: 16px
+}
+.email .block .form .para{
+    font-family: 'IBMPlexSans';
+    font-weight: normal;
+    font-style: normal;
+    margin-top: 10px;
+    font-size: 14px
+}
+
+.resend-btn{
+    background: none;
+    border: none;
+    color: blue;
+    font-family: 'IBMPlexSans';
+}
+
+@media only screen and (max-width: 400px) and (min-width:100px) {
+   
+    .email .logo img{
+        height: 60px;
+    }
+}
