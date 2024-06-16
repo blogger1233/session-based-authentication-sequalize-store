@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-var whitelist = ["http://localhost:5173", "http://192.168.1.8:5173"];
+var whitelist = ["http://localhost:5173", "http://192.168.1.8:5173","https://video-streaming-app-wheat.vercel.app/"];
 
 var corsOptions = {
     origin: function(origin, callback) {

@@ -50,7 +50,7 @@ export default function Signup() {
         // Check if there are any validation errors
         if (validationErrors.length === 0) {
           setLoading(true);
-          fetch("http://192.168.1.8:8000/registration", {
+          fetch("https://video-streaming-app-dvxv.vercel.app/registration", {
             method: 'POST',
             headers: {
               "Content-type": "application/json"
