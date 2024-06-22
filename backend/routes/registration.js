@@ -210,5 +210,59 @@ router.post("/sendmail", async function (req,res) {
             })
 })
 
+router.post("/mailverify",(req,res)=>{
+    const email = req.body.email;
+    const code = req.body.code;
+    console.log(email,code)
+    connect()
+    .then((success)=>{
+        const connection = success.connection;
+        connection.query({
+            sql:"SELECT * FROM CREDENTIALS WHERE email=?",
+            timeout:40000,
+            values:[email]
+        },
+        function(error,result){
+            if(error){
+                return res.status(500).json({error:'Oops something went wrong 7'})
+            }
+            if(result.length>0){
+                const user_id = result[0].user_id;
+                connection.query({
+                    sql:"SELECT * FROM SENT_MAIL where user_id=? ORDER BY sent_time desc",
+                    timeout:40000,
+                    values:[user_id]
+                }
+                ,function(err,result){
+                    if(err){
+                        return res.status(500).json({error:'Oops something went wrong 8'})
+                    }
+                    else{
+                        const {OTP} = result[0];
+                        console.log(OTP)
+                        if(OTP==code){
+                            connection.query({
+                                sql:"UPDATE CREDENTIALS set VERIFIED=true "
+                            },function(error,result){
+                                if(error){
+                                    return res.status(500).json({error:'Oops something went wrong 8'})
+                                }
+                                else{
+                                    return res.status(200).json({message:"user registered successfully"})
+                                }
+                            })
+                        }else{
+                            return res.status(404).json({error:"incorrect OTP"})
+                        }
+                    }
+                }    
+            )
+            }
+            else{
+                return res.status(404).json({error:"FORBIDDEN 404"})
+            }
+        })
+    })
+})
 
 module.exports = router;

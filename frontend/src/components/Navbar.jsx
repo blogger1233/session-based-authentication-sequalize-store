@@ -7,10 +7,10 @@ export default function Navbar() {
             src={logo}
         />
         <div className="nav-link">
-            <Link>
+            <Link to="/signup">
                 Signup
             </Link>
-            <Link>
+            <Link to="/login">
                 Login
             </Link>
             <Link>

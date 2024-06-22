@@ -50,7 +50,7 @@ export default function Signup() {
         // Check if there are any validation errors
         if (validationErrors.length === 0) {
           setLoading(true);
-          fetch("https://video-streaming-app-dvxv.vercel.app/registration", {
+          fetch("http://localhost:8000/registration", {
             method: 'POST',
             headers: {
               "Content-type": "application/json"
@@ -136,7 +136,7 @@ export default function Signup() {
                     onChange={handleChange}
                 />
             </label>
-            <button onClick={handleSubmit}>
+            <button className="submit-btn" onClick={handleSubmit}>
                 {loading?"loading...":"submit"}
             </button>
             <ul className="message">

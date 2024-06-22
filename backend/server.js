@@ -2,23 +2,19 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-var whitelist = ["http://localhost:5173", "http://192.168.1.8:5173","https://video-streaming-app-wheat.vercel.app/"];
+// Use CORS with the specified options
+app.use(cors());
 
-var corsOptions = {
-    origin: function(origin, callback) {
-        if (!origin || whitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-};
-
-app.use(cors(corsOptions));
-
+// Import and use the registration routes
 const registration = require("./routes/registration");
 app.use("/registration", registration);
 
+
+// Import and use the authentication routes
+const authentication = require("./routes/auth");
+app.use("/auth",authentication)
+
+// Start the server
 app.listen(8000, function() {
-    console.log("http://localhost:8000");
-});
+    console.log("Server running at http://localhost:8000")
+})

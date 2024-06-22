@@ -3,24 +3,49 @@ import logo from "../assets/image.png";
 import "../styles/email.css";
 import OtpInput from "react-otp-input";
 import { useLocation } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export default function Email() {
+    const navigate = useNavigate();
     const location = useLocation();
     const [state] = useState(location.state);
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState(null);
-    const [data, setData] = useState(null);
-    const [response, setResponse] = useState(null);
+    const [data, setData] = useState({
+        message:"",
+        error:""
+    });
     const [minutes, setMinutes] = useState();
     const [seconds, setSeconds] = useState();
     const [timeup, setTimeup] = useState(false);
     const [futurecheckpoint, setFutureCheckpoint] = useState(null);
+    const [loading2, setLoading2] = useState(false)
+    const [otp, setOtp] = useState('');
 
+    function submitotp() {
+        setLoading2(true)
+        fetch("http://localhost:8000/registration/mailverify",
+            {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: state.email,
+                    code: otp
+                })
+            })
+            .then((response) => { setStatus(response.status); return response.json() })
+            .then((data) => {
+                setData(data)
+                setLoading2(false)
+
+            })
+    }
     function handleClick() {
         setLoading(true);
         setTimeup(false);
         if (location.state.email) {
-            fetch("http://192.168.1.8:8000/registration/sendmail",
+            fetch("http://localhost:8000/registration/sendmail",
                 {
                     method: "POST",
                     headers: {
@@ -29,11 +54,11 @@ export default function Email() {
                     body: JSON.stringify(state)
                 })
                 .then((response) => {
-                    setStatus(response.status);
+                    
                     return response.json();
                 })
                 .then((data) => {
-                    setData(data);
+                
                     setLoading(false);
                     setFutureCheckpoint(new Date().getTime() + 120000);
                 });
@@ -46,11 +71,6 @@ export default function Email() {
         handleClick();
     }, []);
 
-    const [otp, setOtp] = useState('');
-
-    useEffect(() => {
-        console.log(otp);
-    }, [otp]);
 
     useEffect(() => {
         if (futurecheckpoint) {
@@ -102,22 +122,31 @@ export default function Email() {
                             backgroundColor: "rgb(237, 234, 234)"
                         }}
                     />
-                   
-                        <button
-                            disabled={!timeup}
-                            style={{ color: !timeup ? "grey" : "blue" }}
-                            onClick={handleClick}
-                            className="resend-btn"
-                        >
-                            resend
-                        </button>
-                
+
+                    <button
+                        disabled={!timeup}
+                        style={{ color: !timeup ? "grey" : "blue" }}
+                        onClick={handleClick}
+                        className="resend-btn"
+                    >
+                        resend
+                    </button>
+
                     <p className="para" style={{ color: "green" }}>
                         timer: {minutes !== undefined && seconds !== undefined ? `${minutes}:${seconds}` : "00:00"}
                     </p>
-                    <button onClick={handleClick} className="submit-btn">
-                        submit
+                    <button onClick={submitotp} className="submit-btn">
+                        {loading2 ? "loading..." : "submit"}
                     </button>
+                    <p style={{ color: status && status === 200 ? "green" : "red" }} className="para">
+                        {status && status === 200? (()=>{
+                            data.message; setTimeout(()=>{
+                            navigate("/login")
+                        },1700)})() :
+                         JSON.stringify(data.error)}
+                        
+                    </p>
+
                 </div>
             </div>
         </div>
