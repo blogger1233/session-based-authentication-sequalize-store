@@ -1,7 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
 import Navbar from "../components/Navbar";
-
+import { useNavigate } from "react-router-dom";
 export default function Login(){
+    const navigate = useNavigate();
     const [valid,setValid]=useState(null)
     const [status,setStatus]=useState(null)
     const [response,setResponse]=useState(null)
@@ -62,6 +63,10 @@ export default function Login(){
             .then((data)=>{
                 if(status===200){
                     setResponse(data.message)
+                    localStorage.setItem("session_id",data.session_id)
+                    setTimeout(()=>{
+                        navigate("/home")
+                    },1000)
                 }
                 else{
                     setResponse(data.error)

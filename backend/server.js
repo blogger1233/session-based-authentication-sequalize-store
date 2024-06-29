@@ -14,6 +14,10 @@ app.use("/registration", registration);
 const authentication = require("./routes/auth");
 app.use("/auth",authentication)
 
+const get = require("./routes/get")
+
+app.use("/get",get)
+
 // Start the server
 app.listen(8000, function() {
     console.log("Server running at http://localhost:8000")
